@@ -50,103 +50,55 @@ $
 
 ```mysql
 -- 主键约束
--- 使某个字段不重复且不得为空，确保表内所有数据的唯一性。
-CREATE TABLE user (
-    id INT PRIMARY KEY,
-    name VARCHAR(20)
-);
+-- 使某个字段不重复且不得为空，确保表内所有数据的唯一性。 
 
 -- 联合主键
--- 联合主键中的每个字段都不能为空，并且加起来不能和已设置的联合主键重复。
-CREATE TABLE user (
-    id INT,
-    name VARCHAR(20),
-    password VARCHAR(20),
-    PRIMARY KEY(id, name)
-);
+-- 联合主键中的每个字段都不能为空，并且加起来不能和已设置的联合主键重复。 
 
 -- 自增约束
--- 自增约束的主键由系统自动递增分配。
-CREATE TABLE user (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(20)
-);
+-- 自增约束的主键由系统自动递增分配。 
 
 -- 添加主键约束
--- 如果忘记设置主键，还可以通过SQL语句设置（两种方式）：
-ALTER TABLE user ADD PRIMARY KEY(id);
-ALTER TABLE user MODIFY id INT PRIMARY KEY;
+-- 如果忘记设置主键，还可以通过SQL语句设置（两种方式）： 
 
--- 删除主键
-ALTER TABLE user drop PRIMARY KEY;
+-- 删除主键 
 ```
 
 ### 唯一主键
 
 ```mysql
--- 建表时创建唯一主键
-CREATE TABLE user (
-    id INT,
-    name VARCHAR(20),
-    UNIQUE(name)
-);
+-- 建表时创建唯一主键 
 
 -- 添加唯一主键
--- 如果建表时没有设置唯一建，还可以通过SQL语句设置（两种方式）：
-ALTER TABLE user ADD UNIQUE(name);
-ALTER TABLE user MODIFY name VARCHAR(20) UNIQUE;
+-- 如果建表时没有设置唯一建，还可以通过SQL语句设置（两种方式）： 
 
--- 删除唯一主键
-ALTER TABLE user DROP INDEX name;
+-- 删除唯一主键 
 ```
 
 ### 非空约束
 
 ```mysql
 -- 建表时添加非空约束
--- 约束某个字段不能为空
-CREATE TABLE user (
-    id INT,
-    name VARCHAR(20) NOT NULL
-);
+-- 约束某个字段不能为空 
 
--- 移除非空约束
-ALTER TABLE user MODIFY name VARCHAR(20);
+-- 移除非空约束 
 ```
 
 ### 默认约束
 
 ```mysql
 -- 建表时添加默认约束
--- 约束某个字段的默认值
-CREATE TABLE user2 (
-    id INT,
-    name VARCHAR(20),
-    age INT DEFAULT 10
-);
+-- 约束某个字段的默认值 
 
--- 移除非空约束
-ALTER TABLE user MODIFY age INT;
+-- 移除非空约束 
 ```
 
 ### 外键约束
 
 ```mysql
--- 班级
-CREATE TABLE classes (
-    id INT PRIMARY KEY,
-    name VARCHAR(20)
-);
+-- 班级  
 
--- 学生表
-CREATE TABLE students (
-    id INT PRIMARY KEY,
-    name VARCHAR(20),
-    -- 这里的 class_id 要和 classes 中的 id 字段相关联
-    class_id INT,
-    -- 表示 class_id 的值必须来自于 classes 中的 id 字段值
-    FOREIGN KEY(class_id) REFERENCES classes(id)
-);
+-- 学生表 
 
 -- 1. 主表（父表）classes 中没有的数据值，在副表（子表）students 中，是不可以使用的；
 -- 2. 主表中的记录被副表引用时，主表不可以被删除。
