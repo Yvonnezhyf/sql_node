@@ -4,55 +4,44 @@
 
 ```shell
 # 登录MySQL
-$ mysql -u root -p12345612
+$  
 
 # 退出MySQL数据库服务器
-exit;
+ 
 ```
 
 ## 基本语法
 
 ```mysql
 -- 显示所有数据库
-show databases;
+ 
 
 -- 创建数据库
-CREATE DATABASE test;
+ 
 
 -- 切换数据库
-use test;
+ 
 
 -- 显示数据库中的所有表
-show tables;
+ 
 
 -- 创建数据表
-CREATE TABLE pet (
-    name VARCHAR(20),
-    owner VARCHAR(20),
-    species VARCHAR(20),
-    sex CHAR(1),
-    birth DATE,
-    death DATE
-);
+ 
 
 -- 查看数据表结构
--- describe pet;
-desc pet;
+ 
 
 -- 查询表
-SELECT * from pet;
+ 
 
 -- 插入数据
-INSERT INTO pet VALUES ('puffball', 'Diane', 'hamster', 'f', '1990-03-30', NULL);
-
+ 
 -- 修改数据
-UPDATE pet SET name = 'squirrel' where owner = 'Diane';
-
+ 
 -- 删除数据
-DELETE FROM pet where name = 'squirrel';
-
+ 
 -- 删除表
-DROP TABLE myorder;
+ 
 ```
 
 ## 建表约束
@@ -291,110 +280,57 @@ CREATE TABLE score (
     PRIMARY KEY(s_no, c_no)
 );
 
--- 查看所有表
-SHOW TABLES;
+-- 查看所有表 
 
--- 添加学生表数据
-INSERT INTO student VALUES('101', '曾华', '男', '1977-09-01', '95033');
-INSERT INTO student VALUES('102', '匡明', '男', '1975-10-02', '95031');
-INSERT INTO student VALUES('103', '王丽', '女', '1976-01-23', '95033');
-INSERT INTO student VALUES('104', '李军', '男', '1976-02-20', '95033');
-INSERT INTO student VALUES('105', '王芳', '女', '1975-02-10', '95031');
-INSERT INTO student VALUES('106', '陆军', '男', '1974-06-03', '95031');
-INSERT INTO student VALUES('107', '王尼玛', '男', '1976-02-20', '95033');
-INSERT INTO student VALUES('108', '张全蛋', '男', '1975-02-10', '95031');
-INSERT INTO student VALUES('109', '赵铁柱', '男', '1974-06-03', '95031');
+-- 添加学生表数据 
 
--- 添加教师表数据
-INSERT INTO teacher VALUES('804', '李诚', '男', '1958-12-02', '副教授', '计算机系');
-INSERT INTO teacher VALUES('856', '张旭', '男', '1969-03-12', '讲师', '电子工程系');
-INSERT INTO teacher VALUES('825', '王萍', '女', '1972-05-05', '助教', '计算机系');
-INSERT INTO teacher VALUES('831', '刘冰', '女', '1977-08-14', '助教', '电子工程系');
+-- 添加教师表数据 
 
--- 添加课程表数据
-INSERT INTO course VALUES('3-105', '计算机导论', '825');
-INSERT INTO course VALUES('3-245', '操作系统', '804');
-INSERT INTO course VALUES('6-166', '数字电路', '856');
-INSERT INTO course VALUES('9-888', '高等数学', '831');
+-- 添加课程表数据 
 
--- 添加添加成绩表数据
-INSERT INTO score VALUES('103', '3-105', '92');
-INSERT INTO score VALUES('103', '3-245', '86');
-INSERT INTO score VALUES('103', '6-166', '85');
-INSERT INTO score VALUES('105', '3-105', '88');
-INSERT INTO score VALUES('105', '3-245', '75');
-INSERT INTO score VALUES('105', '6-166', '79');
-INSERT INTO score VALUES('109', '3-105', '76');
-INSERT INTO score VALUES('109', '3-245', '68');
-INSERT INTO score VALUES('109', '6-166', '81');
+-- 添加添加成绩表数据  
 
--- 查看表结构
-SELECT * FROM course;
-SELECT * FROM score;
-SELECT * FROM student;
-SELECT * FROM teacher;
+-- 查看表结构 
 ```
 
 ### 1 到 10
 
 ```mysql
--- 查询 student 表的所有行
-SELECT * FROM student;
+-- 查询 student 表的所有行 
 
--- 查询 student 表中的 name、sex 和 class 字段的所有行
-SELECT name, sex, class FROM student;
+-- 查询 student 表中的 name、sex 和 class 字段的所有行 
 
 -- 查询 teacher 表中不重复的 department 列
--- department: 去重查询
-SELECT DISTINCT department FROM teacher;
+-- department: 去重查询 
 
--- 查询 score 表中成绩在60-80之间的所有行（区间查询和运算符查询）
--- BETWEEN xx AND xx: 查询区间, AND 表示 "并且"
-SELECT * FROM score WHERE degree BETWEEN 60 AND 80;
-SELECT * FROM score WHERE degree > 60 AND degree < 80;
+-- 查询 score 表中成绩在60-80之间的所有行（区间查询和运算符查询） 
 
--- 查询 score 表中成绩为 85, 86 或 88 的行
--- IN: 查询规定中的多个值
-SELECT * FROM score WHERE degree IN (85, 86, 88);
+-- 查询 score 表中成绩为 85, 86 或 88 的行 
 
--- 查询 student 表中 '95031' 班或性别为 '女' 的所有行
--- or: 表示或者关系
-SELECT * FROM student WHERE class = '95031' or sex = '女';
+-- 查询 student 表中 '95031' 班或性别为 '女' 的所有行 
 
 -- 以 class 降序的方式查询 student 表的所有行
 -- DESC: 降序，从高到低
--- ASC（默认）: 升序，从低到高
-SELECT * FROM student ORDER BY class DESC;
-SELECT * FROM student ORDER BY class ASC;
+-- ASC（默认）: 升序，从低到高 
 
--- 以 c_no 升序、degree 降序查询 score 表的所有行
-SELECT * FROM score ORDER BY c_no ASC, degree DESC;
+-- 以 c_no 升序、degree 降序查询 score 表的所有行 
 
 -- 查询 "95031" 班的学生人数
--- COUNT: 统计
-SELECT COUNT(*) FROM student WHERE class = '95031';
+-- COUNT: 统计 
 
--- 查询 score 表中的最高分的学生学号和课程编号（子查询或排序查询）。
--- (SELECT MAX(degree) FROM score): 子查询，算出最高分
-SELECT s_no, c_no FROM score WHERE degree = (SELECT MAX(degree) FROM score);
+-- 查询 score 表中的最高分的学生学号和课程编号（子查询或排序查询）。 
 
 --  排序查询
--- LIMIT r, n: 表示从第r行开始，查询n条数据
-SELECT s_no, c_no, degree FROM score ORDER BY degree DESC LIMIT 0, 1;
+-- LIMIT r, n: 表示从第r行开始，查询n条数据 
 ```
 
 ### 分组计算平均成绩
 
 **查询每门课的平均成绩。**
 
-```mysql
--- AVG: 平均值
-SELECT AVG(degree) FROM score WHERE c_no = '3-105';
-SELECT AVG(degree) FROM score WHERE c_no = '3-245';
-SELECT AVG(degree) FROM score WHERE c_no = '6-166';
+```mysql 
 
--- GROUP BY: 分组查询
-SELECT c_no, AVG(degree) FROM score GROUP BY c_no;
+-- GROUP BY: 分组查询 
 ```
 
 ### 分组条件与模糊查询
@@ -416,34 +352,8 @@ SELECT * FROM score;
 | 109  | 3-105 |     76 |
 | 109  | 3-245 |     68 |
 | 109  | 6-166 |     81 |
-+------+-------+--------+
-```
-
-分析表发现，至少有 2 名学生选修的课程是 `3-105` 、`3-245` 、`6-166` ，以 3 开头的课程是 `3-105` 、`3-245` 。也就是说，我们要查询所有 `3-105` 和 `3-245` 的 `degree` 平均分。
-
-```mysql
--- 首先把 c_no, AVG(degree) 通过分组查询出来
-SELECT c_no, AVG(degree) FROM score GROUP BY c_no
-+-------+-------------+
-| c_no  | AVG(degree) |
-+-------+-------------+
-| 3-105 |     85.3333 |
-| 3-245 |     76.3333 |
-| 6-166 |     81.6667 |
-+-------+-------------+
-
--- 再查询出至少有 2 名学生选修的课程
--- HAVING: 表示持有
-HAVING COUNT(c_no) >= 2
-
--- 并且是以 3 开头的课程
--- LIKE 表示模糊查询，"%" 是一个通配符，匹配 "3" 后面的任意字符。
-AND c_no LIKE '3%';
-
--- 把前面的SQL语句拼接起来，
--- 后面加上一个 COUNT(*)，表示将每个分组的个数也查询出来。
-SELECT c_no, AVG(degree), COUNT(*) FROM score GROUP BY c_no
-HAVING COUNT(c_no) >= 2 AND c_no LIKE '3%';
++------+-------+--------+ 
+最后结果：
 +-------+-------------+----------+
 | c_no  | AVG(degree) | COUNT(*) |
 +-------+-------------+----------+
@@ -491,10 +401,7 @@ SELECT s_no, c_no, degree FROM score;
 通过分析可以发现，只要把 `score` 表中的 `s_no` 字段值替换成 `student` 表中对应的 `name` 字段值就可以了，如何做呢？
 
 ```mysql
--- FROM...: 表示从 student, score 表中查询
--- WHERE 的条件表示为，只有在 student.no 和 score.s_no 相等时才显示出来。
-SELECT name, c_no, degree FROM student, score 
-WHERE student.no = score.s_no;
+ 
 +-----------+-------+--------+
 | name      | c_no  | degree |
 +-----------+-------+--------+
@@ -550,9 +457,7 @@ SELECT s_no, c_no, degree FROM score;
 
 ```mysql
 -- 增加一个查询字段 name，分别从 score、course 这两个表中查询。
--- as 表示取一个该字段的别名。
-SELECT s_no, name as c_name, degree FROM score, course
-WHERE score.c_no = course.no;
+-- as 表示取一个该字段的别名。 
 +------+-----------------+--------+
 | s_no | c_name          | degree |
 +------+-----------------+--------+
@@ -590,47 +495,7 @@ SELECT * FROM score;
 | 109  | 6-166 |     81 |
 +------+-------+--------+
 ```
-
-只要把 `s_no` 和 `c_no` 替换成 `student` 和 `srouse` 表中对应的 `name` 字段值就好了。
-
-首先把 `s_no` 替换成 `student` 表中的 `name` 字段：
-
-```mysql
-SELECT name, c_no, degree FROM student, score WHERE student.no = score.s_no;
-+-----------+-------+--------+
-| name      | c_no  | degree |
-+-----------+-------+--------+
-| 王丽      | 3-105 |     92 |
-| 王丽      | 3-245 |     86 |
-| 王丽      | 6-166 |     85 |
-| 王芳      | 3-105 |     88 |
-| 王芳      | 3-245 |     75 |
-| 王芳      | 6-166 |     79 |
-| 赵铁柱    | 3-105 |     76 |
-| 赵铁柱    | 3-245 |     68 |
-| 赵铁柱    | 6-166 |     81 |
-+-----------+-------+--------+
-```
-
-再把 `c_no` 替换成 `course` 表中的 `name` 字段：
-
-```mysql
--- 课程表
-SELECT no, name FROM course;
-+-------+-----------------+
-| no    | name            |
-+-------+-----------------+
-| 3-105 | 计算机导论      |
-| 3-245 | 操作系统        |
-| 6-166 | 数字电路        |
-| 9-888 | 高等数学        |
-+-------+-----------------+
-
--- 由于字段名存在重复，使用 "表名.字段名 as 别名" 代替。
-SELECT student.name as s_name, course.name as c_name, degree 
-FROM student, score, course
-WHERE student.NO = score.s_no
-AND score.c_no = course.no;
+ 
 ```
 
 ### 子查询加分组求平均分
@@ -640,9 +505,7 @@ AND score.c_no = course.no;
 在 `score` 表中根据 `student`  表的学生编号筛选出学生的课堂号和成绩：
 
 ```mysql
--- IN (..): 将筛选出的学生号当做 s_no 的条件查询
-SELECT s_no, c_no, degree FROM score
-WHERE s_no IN (SELECT no FROM student WHERE class = '95031');
+-- IN (..): 将筛选出的学生号当做 s_no 的条件查询 
 +------+-------+--------+
 | s_no | c_no  | degree |
 +------+-------+--------+
@@ -653,14 +516,9 @@ WHERE s_no IN (SELECT no FROM student WHERE class = '95031');
 | 109  | 3-245 |     68 |
 | 109  | 6-166 |     81 |
 +------+-------+--------+
-```
+``` 
 
-这时只要将 `c_no` 分组一下就能得出 `95031` 班学生每门课的平均成绩：
-
-```mysql
-SELECT c_no, AVG(degree) FROM score
-WHERE s_no IN (SELECT no FROM student WHERE class = '95031')
-GROUP BY c_no;
+```mysql 
 +-------+-------------+
 | c_no  | AVG(degree) |
 +-------+-------------+
