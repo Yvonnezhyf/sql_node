@@ -127,9 +127,9 @@ CREATE TABLE myorder (
 );
 ```
 
-实际上，在这张订单表中，`product_name` 只依赖于 `product_id` ，`customer_name` 只依赖于 `customer_id` 。也就是说，`product_name` 和 `customer_id` 是没用关系的，`customer_name` 和 `product_id` 也是没有关系的。
+实际上，在这张订单表中，`product_name` 只依赖于 `product_id` ，`customer_name` 只依赖于 `customer_id` 。也就是说，`product_name` 和 `customer_id` 是没有关系的，`customer_name` 和 `product_id` 也是没有关系的。
 
-这就不满足第二范式：其他列都必须完全依赖于主键列！
+这就不满足第二范式：其他列都必须完全依赖于主键列！(自己觉得)第一范式，原子性好像也不满足
 
 ```mysql
 CREATE TABLE myorder (
@@ -262,18 +262,14 @@ CREATE TABLE score (
 -- 查询 student 表中 '95031' 班或性别为 '女' 的所有行 
 
 -- 以 class 降序的方式查询 student 表的所有行
--- DESC: 降序，从高到低
--- ASC（默认）: 升序，从低到高 
 
 -- 以 c_no 升序、degree 降序查询 score 表的所有行 
 
--- 查询 "95031" 班的学生人数
--- COUNT: 统计 
+-- 查询 "95031" 班的学生人数 
 
 -- 查询 score 表中的最高分的学生学号和课程编号（子查询或排序查询）。 
 
---  排序查询
--- LIMIT r, n: 表示从第r行开始，查询n条数据 
+--  排序查询。从第r行开始，查询n条数据 
 ```
 
 ### 分组计算平均成绩
@@ -281,9 +277,10 @@ CREATE TABLE score (
 **查询每门课的平均成绩。**
 
 ```mysql 
+--计算c_no='3-105'的课程的平均值
 
--- GROUP BY: 分组查询 
-```
+-- GROUP BY: 分组查询。注意，select后面的列要有包含在group by后面的列中的。
+``` 查询每门课的平均值 
 
 ### 分组条件与模糊查询
 
@@ -482,14 +479,11 @@ SELECT * FROM score;
 
 ### 子查询 - 1
 
-**查询在 `3-105` 课程中，所有成绩高于 `109` 号同学的记录。**
+**查询在 `3-105` 课程中，所有成绩高于 `109` 号同学的所有成绩记录。**
 
 首先筛选出课堂号为 `3-105` ，在找出所有成绩高于 `109` 号同学的的行。
 
-```mysql
-SELECT * FROM score 
-WHERE c_no = '3-105'
-AND degree > (SELECT degree FROM score WHERE s_no = '109' AND c_no = '3-105');
+```mysql 
 ```
 
 ### 子查询 - 2
@@ -497,9 +491,7 @@ AND degree > (SELECT degree FROM score WHERE s_no = '109' AND c_no = '3-105');
 **查询所有成绩高于 `109` 号同学的 `3-105` 课程成绩记录。**
 
 ```mysql
--- 不限制课程号，只要成绩大于109号同学的3-105课程成绩就可以。
-SELECT * FROM score
-WHERE degree > (SELECT degree FROM score WHERE s_no = '109' AND c_no = '3-105');
+-- 不限制课程号，只要成绩大于109号同学的3-105课程成绩就可以。 
 ```
 
 ### YEAR 函数与带 IN 关键字查询
@@ -507,9 +499,7 @@ WHERE degree > (SELECT degree FROM score WHERE s_no = '109' AND c_no = '3-105');
 **查询所有和 `101` 、`108` 号学生同年出生的 `no` 、`name` 、`birthday` 列。**
 
 ```mysql
--- YEAR(..): 取出日期中的年份
-SELECT no, name, birthday FROM student
-WHERE YEAR(birthday) IN (SELECT YEAR(birthday) FROM student WHERE no IN (101, 108));
+-- YEAR(..): 取出日期中的年份 
 ```
 
 ### 多层嵌套子查询
@@ -524,18 +514,12 @@ SELECT NO FROM teacher WHERE NAME = '张旭'
 
 通过 `sourse` 表找到该教师课程号：
 
-```mysql
-SELECT NO FROM course WHERE t_no = ( SELECT NO FROM teacher WHERE NAME = '张旭' );
+```mysql 
 ```
 
 通过筛选出的课程号查询成绩表：
 
-```mysql
-SELECT * FROM score WHERE c_no = (
-    SELECT no FROM course WHERE t_no = ( 
-        SELECT no FROM teacher WHERE NAME = '张旭' 
-    )
-);
+```mysql 
 ```
 
 ### 多表查询
@@ -545,8 +529,7 @@ SELECT * FROM score WHERE c_no = (
 首先在 `teacher` 表中，根据 `no` 字段来判断该教师的同一门课程是否有至少5名学员选修：
 
 ```mysql
--- 查询 teacher 表
-SELECT no, name FROM teacher;
+-- 查询 teacher 表 
 +-----+--------+
 | no  | name   |
 +-----+--------+
