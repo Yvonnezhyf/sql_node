@@ -48,7 +48,7 @@ INSERT INTO pet VALUES ('puffball', 'Diane', 'hamster', 'f', '1990-03-30', NULL)
 -- 修改数据
 UPDATE pet SET name = 'squirrel' where owner = 'Diane';
 
--- 删除数据
+-- 删除数据 #drop删除的是行。删除列是ALTER TABLE user drop XX;
 DELETE FROM pet where name = 'squirrel';
 
 -- 删除表
